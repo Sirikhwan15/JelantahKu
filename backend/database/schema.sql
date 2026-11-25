@@ -58,6 +58,8 @@ CREATE TABLE umkm_profiles (
   address           TEXT,
   slug              VARCHAR(80)  NOT NULL UNIQUE,
   description       TEXT,
+  contact_phone     VARCHAR(20),     -- kontak PUBLIK usaha (terpisah dari telepon akun)
+  contact_email     VARCHAR(255),    -- kontak PUBLIK usaha (terpisah dari email login)
   badge_verified    BOOLEAN      NOT NULL DEFAULT FALSE,
   badge_verified_at TIMESTAMPTZ,
   created_at        TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
@@ -200,6 +202,7 @@ CREATE TABLE reward_redemptions (
   status       voucher_status NOT NULL DEFAULT 'active',
   expires_at   TIMESTAMPTZ,
   used_at      TIMESTAMPTZ,
+  marked_used_by BIGINT REFERENCES users(id) ON DELETE SET NULL,   -- admin yang menandai terpakai
   created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE INDEX redemptions_user_idx ON reward_redemptions (user_id, created_at DESC);

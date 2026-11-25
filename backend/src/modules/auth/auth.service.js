@@ -94,8 +94,8 @@ async function getProfile(userId) {
   const { rows } = await query(
     `SELECT u.id, u.name, u.email, u.phone, u.role, u.created_at,
             w.cash_balance, w.points_balance,
-            p.business_name, p.business_type, p.address AS business_address,
-            p.slug, p.badge_verified
+            p.business_name, p.business_type, p.address AS business_address, p.description AS business_description,
+            p.contact_phone, p.contact_email, p.slug, p.badge_verified
      FROM users u
      LEFT JOIN wallets w        ON w.user_id = u.id
      LEFT JOIN umkm_profiles p  ON p.user_id = u.id
@@ -117,6 +117,9 @@ async function getProfile(userId) {
       businessName: r.business_name,
       businessType: r.business_type,
       address: r.business_address,
+      description: r.business_description,
+      contactPhone: r.contact_phone,
+      contactEmail: r.contact_email,
       slug: r.slug,
       badgeVerified: r.badge_verified,
     } : null,

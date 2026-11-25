@@ -17,8 +17,32 @@ router.get('/health', asyncHandler(async (req, res) => {
   }
 }));
 
+const settings = require('../modules/settings/settings.routes');
+const dropPoints = require('../modules/dropPoints/dropPoints.routes');
+const rewards = require('../modules/rewards/rewards.routes');
+const impact = require('../modules/impact/impact.routes');
+
+// Publik / semua pengguna login
 router.use('/auth', require('../modules/auth/auth.routes'));
 router.use('/users', require('../modules/users/users.routes'));
-// Fase 4: /deposits, /wallet, /rewards, /drop-points, /admin
+router.use('/settings', settings.router);
+router.use('/drop-points', dropPoints.router);
+router.use('/public', impact.publicRouter);
+
+// Customer (household & umkm)
+router.use('/deposits', require('../modules/deposits/deposits.routes').router);
+router.use('/wallet', require('../modules/wallet/wallet.routes').router);
+router.use('/rewards', rewards.router);
+router.use('/impact', impact.router);
+router.use('/umkm', require('../modules/umkm/umkm.routes').router);
+
+// Kurir
+router.use('/courier', require('../modules/courier/courier.routes').router);
+
+// Admin (rute spesifik didaftarkan sebelum '/admin' umum)
+router.use('/admin/settings', settings.adminRouter);
+router.use('/admin/drop-points', dropPoints.adminRouter);
+router.use('/admin/rewards', rewards.adminRouter);
+router.use('/admin', require('../modules/admin/admin.routes').router);
 
 module.exports = router;

@@ -1,12 +1,13 @@
 {
   "name": "jelantahku-backend",
-  "version": "0.3.0",
+  "version": "0.7.0",
   "private": true,
   "description": "REST API JelantahKu (Express + PostgreSQL/Neon)",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node --watch src/server.js"
+    "dev": "node --watch src/server.js",
+    "test:e2e": "node tests/api.e2e.js"
   },
   "engines": {
     "node": ">=20"
